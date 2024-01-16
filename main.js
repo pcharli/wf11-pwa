@@ -12,4 +12,15 @@ installBtn.addEventListener('click', e => {
     e.preventDefault()
     installBtn.classList.add('hidden')
     deferredPrompt.prompt()
+
+deferredPrompt.userChoice.
+    then(choice => {
+        if (choice === 'accepted') {
+            console.log("Installation acceptée")
+        } else {
+            console.log("Instalation refusée")
+        }
+        deferredPrompt = null
+    })
+
 })
