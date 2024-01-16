@@ -44,6 +44,7 @@ fetch('https://api.punkapi.com/v2/beers/random')
 
 //NOTIFICATION
 const notifyMe = () => {
+    alert('notify')
     let myNotification = null
     const options = {
         body: "Envoyé par Pierre",
