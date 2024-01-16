@@ -27,6 +27,8 @@ deferredPrompt.userChoice.
 
 //affichage des bières
 const beersList = document.querySelector('.beers')
+
+if(beersList) {
 fetch('https://api.punkapi.com/v2/beers/random')
     .then(resp => resp.json())
     .then(resp => {
@@ -37,3 +39,4 @@ fetch('https://api.punkapi.com/v2/beers/random')
         })
     })
     .catch(err => console.log(err))
+}
