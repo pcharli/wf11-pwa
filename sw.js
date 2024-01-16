@@ -84,3 +84,13 @@ self.addEventListener('fetch', e => {
     .then(updateCache(e.request))
     .catch(error => console.log(error))
 })
+
+
+//add push notifications
+
+self.addEventListener('push', e => {
+    if( !(self.Notification && self.Notification.permission === 'granted') ) {
+        return;
+    }
+    console.log('test notification')
+})
