@@ -1,4 +1,4 @@
-const version = 1.00
+const version = 1.01
 
 const cacheName = "demo-v1"
 
@@ -15,7 +15,7 @@ const files2Cache = [
     '/icons/favicon-16x16.png',
     '/icons/favicon-96x96.png',
     '/icons/favicon-256x256.png',
-    'https://api.punkapi.com/v2/beers?per_page=10'
+    'https://api.punkapi.com/v2/beers/random'
 ]
 
 const addResourcesToCache = async (resources) => {
@@ -36,11 +36,31 @@ self.addEventListener('activate', e => {
     return self.clients.claim()
 })
 
+//Priorité au cache
+const cacheFirst = async (request) => {
+    const responseFromCache = await caches.match(request)
+    return responseFromCache
+}
+
+//Priorité au réseau
+const networkFirst = async (request) => {
+    const responseFromNetwork = await fetch(request)
+    .catch( ()=> {
+        return caches.match(request)
+    })
+    return responseFromNetwork
+}
+
 //simple fetch general
 self.addEventListener('fetch', e => {
     const requestUrl = new URL(
         e.request.url
     )
     console.log(requestUrl)
-    e.respondWith(caches.match(requestUrl))
+    if(!requestUrl.href.includes("https://api")) {
+        e.respondWith(cacheFirst(requestUrl))
+    }
+    else {
+        e.respondWith(networkFirst(requestUrl))
+    }
 })
