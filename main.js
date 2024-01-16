@@ -24,3 +24,16 @@ deferredPrompt.userChoice.
     })
 
 })
+
+//affichage des bières
+const beersList = document.querySelector('.beers')
+fetch('https://api.punkapi.com/v2/beers?per_page=10')
+    .then(resp => resp.json())
+    .then(resp => {
+        resp.forEach(beer => {
+             beersList.innerHTML += `
+                <li class="beer-item">${beer.name}</li>
+                `
+        })
+    })
+    .catch(err => console.log(err))
